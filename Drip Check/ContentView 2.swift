@@ -30,6 +30,8 @@ struct ContentView: View {
                 }.navigationDestination(isPresented: $accepted) {
                     MainTabBarView()
                         .preferredColorScheme(.light)
+                        .navigationBarBackButtonHidden()
+           
                 }
             }else{
                 ServerOfflineView()

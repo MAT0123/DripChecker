@@ -38,4 +38,3 @@ By using DripCheck, you consent to the terms outlined in this Privacy Policy.
 ## 6. Contact
 
 If you have any questions or concerns, feel free to contact dev at: [matthewaureliustjoa@gmail.com](mailto:matthewaureliustjoa@gmail.com)
-📧 [support@dripcheck.app](mailto:support@dripcheck.app)

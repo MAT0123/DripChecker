@@ -7,20 +7,17 @@
 
 import SwiftUI
 struct ContentView: View {
-    var tosAccepted = UserDefaults.standard.bool(forKey: "tosAccepted")
-    @StateObject private var healthChecker = ServerHealthChecker()
-    
+    @AppStorage("tosAccepted") private var tosAccepted = false
     @State var accepted = false
     var body: some View {
         NavigationStack{
-            if healthChecker.isServerHealthy{
                 VStack {
-                    if tosAccepted && tosAccepted == true {
+                    if tosAccepted {
                         MainTabBarView()
                             .preferredColorScheme(.light)
                     }else{
                         TermsOfServiceView {
-                            UserDefaults.standard.set(true, forKey: "tosAccepted")
+                            tosAccepted = true
                             accepted = true
                         } onDecline: {
                             
@@ -33,9 +30,6 @@ struct ContentView: View {
                         .navigationBarBackButtonHidden()
            
                 }
-            }else{
-                ServerOfflineView()
-            }
         }
     }
 }

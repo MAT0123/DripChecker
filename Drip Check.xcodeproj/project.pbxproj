@@ -6,13 +6,35 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		64078E442DEC192C00CBD3D3 /* Drip-Check-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64078E412DEC188A00CBD3D3 /* Drip-Check-Info.plist */; };
+		649294A02DEC146500CB8965 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 6492949F2DEC146500CB8965 /* OpenAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		64078E412DEC188A00CBD3D3 /* Drip-Check-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Drip-Check-Info.plist"; sourceTree = "<group>"; };
 		649294132DEC12E000CB8965 /* Drip Check.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Drip Check.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		64078E3A2DEC15B800CBD3D3 /* Exceptions for "Drip Check" folder in "Drip Check" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				ViewModel/AppleSignInManager.swift,
+				ViewModel/FirebaseAuthManager.swift,
+				ViewModel/NonceGenerator.swift,
+			);
+			target = 649294122DEC12E000CB8965 /* Drip Check */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		649294152DEC12E000CB8965 /* Drip Check */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				64078E3A2DEC15B800CBD3D3 /* Exceptions for "Drip Check" folder in "Drip Check" target */,
+			);
 			path = "Drip Check";
 			sourceTree = "<group>";
 		};
@@ -23,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649294A02DEC146500CB8965 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +57,7 @@
 			children = (
 				649294152DEC12E000CB8965 /* Drip Check */,
 				649294142DEC12E000CB8965 /* Products */,
+				64078E412DEC188A00CBD3D3 /* Drip-Check-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +89,7 @@
 			);
 			name = "Drip Check";
 			packageProductDependencies = (
+				6492949F2DEC146500CB8965 /* OpenAI */,
 			);
 			productName = "Drip Check";
 			productReference = 649294132DEC12E000CB8965 /* Drip Check.app */;
@@ -94,6 +119,9 @@
 			);
 			mainGroup = 6492940A2DEC12E000CB8965;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6492949E2DEC146500CB8965 /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 649294142DEC12E000CB8965 /* Products */;
 			projectDirPath = "";
@@ -109,6 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64078E442DEC192C00CBD3D3 /* Drip-Check-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +156,8 @@
 /* Begin XCBuildConfiguration section */
 		6492941C2DEC12E100CB8965 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
+			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -178,6 +209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Drip Check/Drip-Check-Info.plist\n";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -191,6 +223,8 @@
 		};
 		6492941D2DEC12E100CB8965 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
+			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -236,6 +270,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Drip Check/Drip-Check-Info.plist\n";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -248,6 +283,8 @@
 		};
 		6492941F2DEC12E100CB8965 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
+			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -255,7 +292,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68WNVQ6X3D;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Drip-Check-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -276,6 +314,8 @@
 		};
 		649294202DEC12E100CB8965 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
+			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -283,7 +323,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68WNVQ6X3D;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Drip-Check-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +365,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6492949E2DEC146500CB8965 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6492949F2DEC146500CB8965 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6492949E2DEC146500CB8965 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6492940B2DEC12E000CB8965 /* Project object */;
 }

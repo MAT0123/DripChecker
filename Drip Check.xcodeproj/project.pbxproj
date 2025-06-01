@@ -156,8 +156,6 @@
 /* Begin XCBuildConfiguration section */
 		6492941C2DEC12E100CB8965 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
-			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -223,8 +221,6 @@
 		};
 		6492941D2DEC12E100CB8965 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
-			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -283,8 +279,6 @@
 		};
 		6492941F2DEC12E100CB8965 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
-			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,6 +289,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Drip-Check-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "DripCheck: Fashion Analyzer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -306,7 +301,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "matthew.tjoa.Drip-Check";
+				PRODUCT_BUNDLE_IDENTIFIER = matthew.tjoa.DripCheckFashionAnalyzer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -316,8 +311,6 @@
 		};
 		649294202DEC12E100CB8965 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 649294152DEC12E000CB8965 /* Drip Check */;
-			baseConfigurationReferenceRelativePath = Lib/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -328,6 +321,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Drip-Check-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "DripCheck: Fashion Analyzer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -339,7 +333,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "matthew.tjoa.Drip-Check";
+				PRODUCT_BUNDLE_IDENTIFIER = matthew.tjoa.DripCheckFashionAnalyzer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

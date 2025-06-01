@@ -332,7 +332,7 @@ struct ReviewAnalysisView: View {
         Task {
             do {
                 // Use retry logic for better reliability
-                try await aiManager.performAnalysisWithRetry(reviewType: reviewType)
+                try await aiManager.performOpenAIAnalysis(reviewType: reviewType)
             } catch {
                 print("Analysis failed: \(error)")
                 // Error handling is already done in AIManager

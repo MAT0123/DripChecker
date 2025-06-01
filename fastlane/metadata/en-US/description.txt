@@ -1,0 +1,6 @@
+Drip Check – Fashion Analyzer is your personal AI fashion stylist. Upload an outfit, and get feedback based on color coordination, trends, and aesthetics. Whether you're dressing for a date, interview, or photoshoot, Drip Check helps you make smarter style decisions.
+Features:
+AI-powered outfit scoring
+Trend-based suggestions
+Comparison mode
+History of past outfits

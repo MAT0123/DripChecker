@@ -233,7 +233,7 @@ class AIManager: ObservableObject {
     
     // Server configuration
     private let serverBaseURL: String = {
-        return "https://drip-check-server-iyx6.vercel.app/api"
+        return "https://dripcheckapi.matthewautjoa.tech/api"
     }()
     
     // Published properties for UI binding

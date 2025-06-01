@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ActionButtonsView: View {
+    var reanalyzeAction: () -> Void
+    let shareAction: () -> Void
     var body: some View {
         HStack(spacing: 12) {
             Button(action: {
-                // Handle re-analysis
+                reanalyzeAction()
             }) {
                 HStack(spacing: 6) {
                     Image(systemName: "arrow.clockwise")
@@ -31,7 +33,7 @@ struct ActionButtonsView: View {
             Spacer()
             
             Button(action: {
-                // Handle sharing
+               shareAction()
             }) {
                 HStack(spacing: 6) {
                     Image(systemName: "square.and.arrow.up")

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ComparisonAnalysisView: View {
     let analysis: ComparisonAnalysis
-    
+    let reanalyzeFunction: () -> Void
+    let shareFunction: () -> Void
     var body: some View {
         VStack(spacing: 20) {
             // Header
@@ -54,7 +55,11 @@ struct ComparisonAnalysisView: View {
             ComparisonDetailsCard(comparison: analysis.comparison)
             
             // Action Buttons
-            ActionButtonsView()
+            ActionButtonsView(reanalyzeAction: {
+                reanalyzeFunction()
+            }, shareAction: {
+                shareFunction()
+            })
         }
     }
 }

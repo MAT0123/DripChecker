@@ -105,17 +105,17 @@ struct AccountSettingsView: View {
 
                                 }
                                 
-                                SettingsRow(
-                                    icon: "lock.fill",
-                                    title: "Privacy Policy",
-                                    subtitle: "How we protect your data"
-                                ) {
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                } action: {
-                                    
-                                }
+//                                SettingsRow(
+//                                    icon: "lock.fill",
+//                                    title: "Privacy Policy",
+//                                    subtitle: "How we protect your data"
+//                                ) {
+//                                    Image(systemName: "chevron.right")
+//                                        .foregroundColor(.gray)
+//                                        .font(.caption)
+//                                } action: {
+//                                    
+//                                }
                             }
                             
                             // Danger Zone

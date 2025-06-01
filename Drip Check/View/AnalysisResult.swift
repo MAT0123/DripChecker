@@ -12,7 +12,8 @@ import SwiftUI
 
 struct SingleOutfitAnalysisView: View {
     let analysis: SingleOutfitAnalysis
-    
+    let reanalyzeFunction: () -> Void
+    let shareFunction : () -> Void
     var body: some View {
         VStack(spacing: 20) {
             // Header with overall score
@@ -65,7 +66,11 @@ struct SingleOutfitAnalysisView: View {
             )
             
             // Action Buttons
-            ActionButtonsView()
+            ActionButtonsView(reanalyzeAction: {
+                reanalyzeFunction()
+            }, shareAction: {
+                shareFunction()
+            })
         }
     }
 }

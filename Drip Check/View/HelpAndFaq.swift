@@ -276,7 +276,7 @@ struct ContactSupportView: View {
             VStack(spacing: 12) {
                 Button(action: {
                     // Handle email support
-                    if let url = URL(string: "mailto:support@dripcheck.app") {
+                    if let url = URL(string: "mailto:matthewaureliustjoa@gmail.com") {
                         UIApplication.shared.open(url)
                     }
                 }) {
@@ -353,7 +353,7 @@ extension HelpFAQView {
                     ),
                     FAQItem(
                         question: "Do I need to create an account?",
-                        answer: "No account is required to use DripCheck! Your analyses are saved locally on your device. However, creating an account allows you to sync your fashion history across devices."
+                        answer: "No account is required to use DripCheck! Your analyses are saved locally on your device."
                     )
                 ]
             ),
@@ -364,7 +364,7 @@ extension HelpFAQView {
                 items: [
                     FAQItem(
                         question: "How accurate is the AI fashion analysis?",
-                        answer: "Our AI is trained on thousands of fashion images and style guidelines. While it provides valuable insights, remember that fashion is subjective and personal style preferences vary.",
+                        answer: "Our AI uses OpenAI's advanced models to analyze fashion and style. While the insights are helpful, fashion is still a matter of personal taste.",
                         tips: [
                             "Use AI feedback as guidance, not absolute rules",
                             "Consider your personal style and comfort",

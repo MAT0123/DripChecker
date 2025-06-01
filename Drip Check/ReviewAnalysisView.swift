@@ -65,19 +65,27 @@ struct ReviewAnalysisView: View {
                             } else {
                                 switch aiManager.analysis {
                                 case .single(let singleOutfitAnalysis):
-                                            SingleOutfitAnalysisView(analysis: singleOutfitAnalysis)
+                                    SingleOutfitAnalysisView(analysis: singleOutfitAnalysis, reanalyzeFunction: {
+                                        startAnalysis()
+                                    }, shareFunction: {
+                                        shareAnalysis()
+                                    })
                                             
                                         case .comparison(let comparisonAnalysis):
-                                            ComparisonAnalysisView(analysis: comparisonAnalysis)
+                                    ComparisonAnalysisView(analysis: comparisonAnalysis, reanalyzeFunction: {
+                                        startAnalysis()
+                                    }, shareFunction: {
+                                        shareAnalysis()
+                                    })
                                             
                                         case .error(let string):
                                             ErrorAnalysisView(errorMessage: string) {
-                                                startAnalysis() // Your retry function
+                                                startAnalysis()
                                             }
                                             
                                         case nil:
                                             ReadyToAnalyzeView {
-                                                startAnalysis() // Your start analysis function
+                                                startAnalysis()
                                             }
                                         
                                 }
@@ -222,6 +230,7 @@ struct ReviewAnalysisView: View {
             // Action buttons
             HStack(spacing: 12) {
                 Button(action: {
+                    
                     startAnalysis()
                 }) {
                     HStack(spacing: 6) {
@@ -240,26 +249,26 @@ struct ReviewAnalysisView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    shareAnalysis()
-                }) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "square.and.arrow.up")
-                        Text("Share")
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.purple, .pink]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .cornerRadius(8)
-                }
+//                Button(action: {
+//                    shareAnalysis()
+//                }) {
+//                    HStack(spacing: 6) {
+//                        Image(systemName: "square.and.arrow.up")
+//                        Text("Share")
+//                    }
+//                    .font(.subheadline)
+//                    .foregroundColor(.white)
+//                    .padding(.horizontal, 16)
+//                    .padding(.vertical, 8)
+//                    .background(
+//                        LinearGradient(
+//                            gradient: Gradient(colors: [.purple, .pink]),
+//                            startPoint: .leading,
+//                            endPoint: .trailing
+//                        )
+//                    )
+//                    .cornerRadius(8)
+//                }
             }
         }
         .padding(20)
@@ -315,33 +324,141 @@ struct ReviewAnalysisView: View {
     }
     
     // MARK: - Analysis Functions
-    
     private func startAnalysis() {
+        // Reset the analysis state to nil to show loading
+        aiManager.analysis = nil
         aiManager.isAnalyzing = true
         
         Task {
-            do{
-                try await aiManager.performOpenAIAnalysis(reviewType: reviewType)
-            }catch{
-                print(error)
+            do {
+                // Use retry logic for better reliability
+                try await aiManager.performAnalysisWithRetry(reviewType: reviewType)
+            } catch {
+                print("Analysis failed: \(error)")
+                // Error handling is already done in AIManager
             }
         }
     }
 
-    
+    private func shareAnalysis() {
+            guard let analysis = aiManager.analysis else { return }
+            
+            var shareItems: [Any] = []
+            
+            // Add the outfit image(s) to share
+            shareItems.append(contentsOf: images)
+            
+            // Create formatted text based on analysis type
+            let shareText = createShareText(for: analysis)
+            shareItems.append(shareText)
+            
+            // Present the share sheet
+            let activityController = UIActivityViewController(
+                activityItems: shareItems,
+                applicationActivities: nil
+            )
+            
+            // For iPad support
+            if let popover = activityController.popoverPresentationController {
+                popover.sourceView = UIApplication.shared.windows.first
+                popover.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
+            }
+            
+            // Present the share sheet
+            DispatchQueue.main.async {
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let window = windowScene.windows.first,
+                   let rootViewController = window.rootViewController {
+                    
+                    // Find the top-most view controller
+                    var topController = rootViewController
+                    while let presentedController = topController.presentedViewController {
+                        topController = presentedController
+                    }
+                    
+                    topController.present(activityController, animated: true)
+                }
+            }
+        }
+        
+        private func createShareText(for analysis: AnalysisResult) -> String {
+            switch analysis {
+            case .single(let singleAnalysis):
+                return createSingleOutfitShareText(singleAnalysis)
+            case .comparison(let comparisonAnalysis):
+                return createComparisonShareText(comparisonAnalysis)
+            case .error(_):
+                return "Check out my outfit analysis with DripCheck! 👔✨"
+            }
+        }
+        
+        private func createSingleOutfitShareText(_ analysis: SingleOutfitAnalysis) -> String {
+            let scoreEmoji = getScoreEmoji(analysis.fashionScore.score)
+            
+            return """
+            👔 My Outfit Analysis with DripCheck ✨
+            
+            Overall Score: \(String(format: "%.1f", analysis.fashionScore.score))/10 \(scoreEmoji)
+            Style: \(analysis.styleAnalysis.category)
+            
+            💡 Key Insights:
+            \(analysis.overallImpression)
+            
+            ✅ What's Working:
+            \(analysis.strengths.prefix(2).map { "• \($0)" }.joined(separator: "\n"))
+            
+            🎯 Style Tips:
+            \(analysis.stylingTips.prefix(2).map { "• \($0)" }.joined(separator: "\n"))
+            
+            #OutfitAnalysis #Fashion #Style #DripCheck
+            """
+        }
+        
+        private func createComparisonShareText(_ analysis: ComparisonAnalysis) -> String {
+            let bestOutfit = analysis.comparison.bestOutfit
+            let scoreEmoji = getScoreEmoji(bestOutfit.score)
+            
+            return """
+            👔 Outfit Comparison with DripCheck ✨
+            
+            Winner: Outfit \(bestOutfit.number) \(scoreEmoji)
+            Score: \(String(format: "%.1f", bestOutfit.score))/10
+            
+            Why it won:
+            \(bestOutfit.reason)
+            
+            💡 Summary:
+            \(analysis.summary)
+            
+            🎯 Pro Tips:
+            \(analysis.comparison.improvementTips.prefix(2).map { "• \($0)" }.joined(separator: "\n"))
+            
+            #OutfitComparison #Fashion #Style #DripCheck
+            """
+        }
+        
+        private func getScoreEmoji(_ score: Double) -> String {
+            switch score {
+            case 9.0...10.0: return "🔥"
+            case 8.0...8.9: return "✨"
+            case 7.0...7.9: return "👍"
+            case 6.0...6.9: return "👌"
+            default: return "💪"
+            }
+        }
     
 
-    private func shareAnalysis() {
-        let activityController = UIActivityViewController(
-            activityItems: [],
-            applicationActivities: nil
-        )
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController?.present(activityController, animated: true)
-        }
-    }
+//    private func shareAnalysis() {
+//        let activityController = UIActivityViewController(
+//            activityItems: [aiManager.analysis],
+//            applicationActivities: nil
+//        )
+//        
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let window = windowScene.windows.first {
+//            window.rootViewController?.present(activityController, animated: true)
+//        }
+//    }
 }
 
 

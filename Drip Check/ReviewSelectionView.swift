@@ -315,7 +315,7 @@ struct ReviewOptionCard: View {
             // Action button
             Button(action: action) {
                 HStack(spacing: 8) {
-                    Image(systemName: requiresMultiple ? "photos" : "camera")
+                    Image(systemName: requiresMultiple ? "photo" : "camera")
                         .font(.system(size: 16))
                     
                     Text(buttonText)

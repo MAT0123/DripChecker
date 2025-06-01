@@ -148,7 +148,7 @@ struct TermsOfServiceView: View {
             Group {
                 TermsSection(
                     title: "1. Acceptance of Terms",
-                    content: "By using DripCheck (\"the App\"), you agree to these Terms of Service. If you do not agree, please do not use the App."
+                    content: "By using DripCheck, you agree to these Terms of Service. If you do not agree, please do not use the App."
                 )
                 
                 TermsSection(

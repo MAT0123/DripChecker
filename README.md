@@ -29,12 +29,12 @@ Your analysis history is stored locally on your device and is not transmitted or
 
 ---
 
-## 5. Your Consent
+## 4. Your Consent
 
 By using DripCheck, you consent to the terms outlined in this Privacy Policy.
 
 ---
 
-## 6. Contact
+## 5. Contact
 
 If you have any questions or concerns, feel free to contact dev at: [matthewaureliustjoa@gmail.com](mailto:matthewaureliustjoa@gmail.com)

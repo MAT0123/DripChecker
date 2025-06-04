@@ -9,11 +9,11 @@ import SwiftUI
 import StoreKit
 struct MainTabBarView: View {
     @State private var selectedTab = 0
-    
+    @EnvironmentObject var networkManager:NetworkManager
     var body: some View {
         TabView(selection: $selectedTab) {
             // Home Tab
-            ReviewSelectionView(onSingleReview: { image in
+            ReviewSelectionView(networkManager: networkManager, onSingleReview: { image in
                 
             }, onComparison: { image in
                 
@@ -44,8 +44,4 @@ struct MainTabBarView: View {
     }
 }
 
-struct MainTabBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainTabBarView()
-    }
-}
+

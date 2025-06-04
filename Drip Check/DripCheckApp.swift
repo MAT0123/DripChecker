@@ -20,11 +20,14 @@ import SwiftData
 @main
 struct DripCheckApp: App {
     //@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var networkManager = NetworkManager()
     var body: some Scene {
         
         WindowGroup {
             ContentView()
                 .modelContainer(for: AnalysisHistoryItem.self)
+                .environmentObject(networkManager)
+
         }
     }
 }

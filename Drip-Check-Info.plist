@@ -27,6 +27,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>DripCheck needs camera access for AI fashion analysis</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>DripCheck needs photo library access to select outfit photos for AI fashion analysis</string>
 	<key>UILaunchStoryboardName</key>

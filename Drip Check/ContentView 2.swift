@@ -9,6 +9,7 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("tosAccepted") private var tosAccepted = false
     @State var accepted = false
+    
     var body: some View {
         NavigationStack{
                 VStack {

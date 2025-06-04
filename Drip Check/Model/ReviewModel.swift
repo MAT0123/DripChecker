@@ -10,6 +10,7 @@ import Foundation
 enum ReviewType {
     case single
     case comparison
+    case color_matcher
 }
 
 struct SingleOutfitAnalysis: Codable {
@@ -114,6 +115,8 @@ struct BestOutfit: Codable {
 enum AnalysisResult {
     case single(SingleOutfitAnalysis)
     case comparison(ComparisonAnalysis)
+    case color_matcher(ColorMatcher)
+
     case error(String)
     
     var isSingle: Bool {
@@ -149,135 +152,3 @@ enum AnalysisResult {
 
 // MARK: - Analysis Parser
 
-struct AnalysisParser {
-    static func parseAnalysis(from jsonString: String, reviewType: ReviewType) -> AnalysisResult {
-        
-        let cleanedJSON = jsonString
-                        .replacingOccurrences(of: "```json", with: "")
-                        .replacingOccurrences(of: "```", with: "")
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard let data = cleanedJSON.data(using: .utf8) else {
-            return .error("Failed to convert response to data")
-        }
-        
-        do {
-            switch reviewType {
-            case .single:
-                let analysis = try JSONDecoder().decode(SingleOutfitAnalysis.self, from: data)
-                return .single(analysis)
-            case .comparison:
-                let analysis = try JSONDecoder().decode(ComparisonAnalysis.self, from: data)
-                return .comparison(analysis)
-            }
-        } catch {
-            // Try to extract meaningful error info
-            if let jsonError = error as? DecodingError {
-                let errorMessage = parseDecodingError(jsonError)
-                return .error("Failed to parse analysis: \(errorMessage)")
-            } else {
-                return .error("Failed to parse analysis: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    private static func parseDecodingError(_ error: DecodingError) -> String {
-        switch error {
-        case .keyNotFound(let key, _):
-            return "Missing key: \(key.stringValue)"
-        case .typeMismatch(let type, let context):
-            return "Type mismatch for \(type) at \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
-        case .valueNotFound(let type, let context):
-            return "Value not found for \(type) at \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
-        case .dataCorrupted(let context):
-            return "Data corrupted at \(context.codingPath.map { $0.stringValue }.joined(separator: "."))"
-        @unknown default:
-            return "Unknown decoding error"
-        }
-    }
-}
-
-// MARK: - Extensions for UI
-
-extension StyleAnalysis {
-    var categoryIcon: String {
-        switch category.lowercased() {
-        case "casual":
-            return "tshirt"
-        case "formal":
-            return "suit.fill"
-        case "business casual":
-            return "briefcase"
-        case "streetwear":
-            return "figure.walk"
-        case "athletic", "sporty":
-            return "figure.run"
-        case "bohemian", "boho":
-            return "leaf"
-        default:
-            return "shirt"
-        }
-    }
-    
-    var categoryColor: String {
-        switch category.lowercased() {
-        case "casual":
-            return "blue"
-        case "formal":
-            return "black"
-        case "business casual":
-            return "gray"
-        case "streetwear":
-            return "orange"
-        case "athletic", "sporty":
-            return "green"
-        case "bohemian", "boho":
-            return "purple"
-        default:
-            return "blue"
-        }
-    }
-}
-
-extension FashionScore {
-    var scoreColor: String {
-        switch score {
-        case 9.0...10.0:
-            return "green"
-        case 7.0..<9.0:
-            return "blue"
-        case 5.0..<7.0:
-            return "orange"
-        default:
-            return "red"
-        }
-    }
-    
-    var scoreEmoji: String {
-        switch score {
-        case 9.0...10.0:
-            return "🔥"
-        case 7.0..<9.0:
-            return "👌"
-        case 5.0..<7.0:
-            return "👍"
-        default:
-            return "💡"
-        }
-    }
-}
-
-extension OutfitSummary {
-    var scoreColor: String {
-        switch score {
-        case 9.0...10.0:
-            return "green"
-        case 7.0..<9.0:
-            return "blue"
-        case 5.0..<7.0:
-            return "orange"
-        default:
-            return "red"
-        }
-    }
-}

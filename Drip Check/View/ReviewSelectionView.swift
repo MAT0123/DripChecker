@@ -10,9 +10,15 @@ import PhotosUI
 
 struct ReviewSelectionView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var networkManager:NetworkManager
+
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
     @State private var stackPath = NavigationPath()
+    @State private var showDialog = false
+    @State private var showCamera = false
+    @State private var showPhotoPicker = false
+
     var onSingleReview: ([UIImage]) -> Void
     var onComparison: ([UIImage]) -> Void
     
@@ -55,12 +61,9 @@ struct ReviewSelectionView: View {
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
                             
-                            // Photo Picker Button
-                            PhotosPicker(
-                                selection: $selectedPhotos,
-                                maxSelectionCount: 3,
-                                matching: .images
-                            ) {
+                            Button {
+                                showDialog.toggle()
+                            } label: {
                                 HStack(spacing: 12) {
                                     Image(systemName: "photo.on.rectangle.angled")
                                         .font(.title3)
@@ -82,6 +85,7 @@ struct ReviewSelectionView: View {
                                 .cornerRadius(12)
                                 .shadow(color: .indigo.opacity(0.3), radius: 6, x: 0, y: 3)
                             }
+
                             .onChange(of: selectedPhotos) { newPhotos in
                                 loadImages(from: newPhotos)
                             }
@@ -120,6 +124,26 @@ struct ReviewSelectionView: View {
                                     .foregroundColor(.secondary)
                             }
                         }
+                        .photosPicker(
+                            isPresented: $showPhotoPicker,
+                            selection: $selectedPhotos,
+                            maxSelectionCount: 3,
+                            matching: .images
+                        )
+                        .sheet(isPresented: $showCamera) {
+                            CameraPicker(image: $selectedImages)
+                        }
+                        .confirmationDialog("Source Type", isPresented: $showDialog
+                                            , actions: {
+                            Button("Take Photo") {
+                                    showCamera = true
+                                }
+                            Button("Select from Library") {
+                                    showPhotoPicker = true
+                                }
+                            Button("Cancel", role: .cancel) {}
+                            
+                        })
                         .padding(.horizontal, 20)
                         // Review Options
                         VStack(spacing: 24) {
@@ -136,7 +160,7 @@ struct ReviewSelectionView: View {
                                 ],
                                 buttonText: "Review My Outfit",
                                 buttonColors: [.purple, .pink],
-                                isEnabled: selectedImages.count >= 1,
+                                isEnabled: (selectedImages.count >= 1 && networkManager.internetStatus == .satisfied),
                                 action: {
                                     stackPath.append("single")
                                 }
@@ -155,12 +179,31 @@ struct ReviewSelectionView: View {
                                 ],
                                 buttonText: "Compare Outfits",
                                 buttonColors: [.blue, .cyan],
-                                isEnabled: selectedImages.count >= 2,
+                                isEnabled: (selectedImages.count >= 2 && networkManager.internetStatus == .satisfied),
                                 action: {
                                     stackPath.append("multiple")
 
                                 },
                                 requiresMultiple: true
+                            )
+                            
+                            ReviewOptionCard(
+                                icon: "paintpalette.fill",
+                                title: "Color Match",
+                                subtitle: "Best cloth color tones for your skin",
+                                features: [
+                                    "Analyze your skin tone",
+                                    "Suggests flattering colors",
+                                    "Improve outfit harmony",
+                                    "Tailored for your palette"
+                                ],
+                                buttonText: "Match My Colors",
+                                buttonColors: [.pink, .orange],
+                                isEnabled: (selectedImages.count == 1 && networkManager.internetStatus == .satisfied),
+                                action: {
+                                    stackPath.append("skin")
+                                },
+                                requiresMultiple: false
                             )
                         }
                         .padding(.horizontal, 20)
@@ -170,13 +213,17 @@ struct ReviewSelectionView: View {
                 }
             }
             .navigationDestination(for: String.self, destination: { value in
+                let reviewAnalysis = ReviewAnalysisView(images: selectedImages, reviewType: .single)
                 if value == "single" {
-                    ReviewAnalysisView(images: selectedImages, reviewType: .single)
+                   reviewAnalysis
                         .navigationBarBackButtonHidden()
-                }else{
-                    ReviewAnalysisView(images: selectedImages, reviewType: .comparison)
+                }else if value == "skin"{
+                    reviewAnalysis
                         .navigationBarBackButtonHidden()
-
+                }
+                else{
+                    reviewAnalysis
+                        .navigationBarBackButtonHidden()
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
@@ -196,7 +243,6 @@ struct ReviewSelectionView: View {
         }
     }
     
-    // Helper function to load images from PhotosPicker items
     private func loadImages(from items: [PhotosPickerItem]) {
         selectedImages = []
         
@@ -347,16 +393,3 @@ struct ReviewOptionCard: View {
     }
 }
 
-// Preview
-struct ReviewSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReviewSelectionView(
-            onSingleReview: { images in
-                print("Single review selected with \(images.count) images")
-            },
-            onComparison: { images in
-                print("Comparison selected with \(images.count) images")
-            }
-        )
-    }
-}

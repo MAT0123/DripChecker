@@ -12,7 +12,6 @@ class AnalysisHistoryItem {
     var summary: String
     var overallScore: Double?
 
-    // Transient property to use UIImages in SwiftUI
     @Transient
     var images: [UIImage] {
         get {
@@ -36,11 +35,12 @@ class AnalysisHistoryItem {
 enum AnalysisType: String, Codable, CaseIterable {
     case single = "single"
     case comparison = "comparison"
-
+    case color_matcher = "color_mathcer"
     var displayName: String {
         switch self {
         case .single: return "Single Outfit"
         case .comparison: return "Outfit Comparison"
+        case .color_matcher : return "Color Matching"
         }
     }
 }

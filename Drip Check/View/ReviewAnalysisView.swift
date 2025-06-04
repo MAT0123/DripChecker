@@ -52,7 +52,7 @@ struct ReviewAnalysisView: View {
                         .padding(.top, 20)
                         
                         // Images Display
-                        if reviewType == .single {
+                        if reviewType == .single || reviewType == .color_matcher {
                             singleImageView
                         } else {
                             comparisonImageView
@@ -77,6 +77,9 @@ struct ReviewAnalysisView: View {
                                     }, shareFunction: {
                                         shareAnalysis()
                                     })
+                                    
+                                case .color_matcher(let matcher):
+                                    ColorMatcherView(colorMatcher: matcher)
                                             
                                         case .error(let string):
                                             ErrorAnalysisView(errorMessage: string) {
@@ -88,6 +91,7 @@ struct ReviewAnalysisView: View {
                                                 startAnalysis()
                                             }
                                         
+                                
                                 }
                             }
                         }
@@ -122,7 +126,9 @@ struct ReviewAnalysisView: View {
                 Button("Try Again") {
                     startAnalysis()
                 }
-                Button("Cancel", role: .cancel) { }
+                Button("Cancel", role: .cancel) {
+                    dismiss()
+                }
             } message: {
                 Text(aiManager.errorMessage)
             }
@@ -387,8 +393,11 @@ struct ReviewAnalysisView: View {
                 return createSingleOutfitShareText(singleAnalysis)
             case .comparison(let comparisonAnalysis):
                 return createComparisonShareText(comparisonAnalysis)
+            case .color_matcher(let matcher):
+                return createColorMatcherText(matcher)
             case .error(_):
                 return "Check out my outfit analysis with DripCheck! 👔✨"
+            
             }
         }
         
@@ -436,7 +445,20 @@ struct ReviewAnalysisView: View {
             #OutfitComparison #Fashion #Style #DripCheck
             """
         }
+    private func createColorMatcherText(_ analysis: ColorMatcher) -> String {
+        return """
+        👔 Outfit Comparison with DripCheck ✨
         
+        Winner: Colors that match with me \(analysis.recommendedColors.primaryPalette.map({ $0 + " " }))
+        Score: \(String(format: "%.1f", analysis.score))/10
+
+        💡 Summary:
+        \(analysis.summary)
+        
+        #OutfitComparison #Fashion #Style #DripCheck
+        """
+        
+    }
         private func getScoreEmoji(_ score: Double) -> String {
             switch score {
             case 9.0...10.0: return "🔥"
